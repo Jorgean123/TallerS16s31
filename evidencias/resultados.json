@@ -1,0 +1,680 @@
+[
+  {
+    "caso": "CP-01",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos",
+    "authorization": "Ausente",
+    "body": null,
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:16.932945600Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "instance": "/api/v1/cursos",
+      "error": "Unauthorized",
+      "message": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "CP-02",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=6&sort=-vacantes",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": [
+      {
+        "id": 4,
+        "codigo": "100000S151",
+        "nombre": "Redes y Comunicaciones",
+        "ciclo": 6,
+        "vacantes": 35
+      },
+      {
+        "id": 1,
+        "codigo": "100000S154",
+        "nombre": "Desarrollo Web Integrado",
+        "ciclo": 6,
+        "vacantes": 30
+      },
+      {
+        "id": 2,
+        "codigo": "100000S153",
+        "nombre": "Base de Datos Avanzada",
+        "ciclo": 6,
+        "vacantes": 24
+      },
+      {
+        "id": 3,
+        "codigo": "100000S152",
+        "nombre": "Ingeniería de Software",
+        "ciclo": 6,
+        "vacantes": 18
+      }
+    ]
+  },
+  {
+    "caso": "CP-03",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?sort=password",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:16.971944700Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "Campo de ordenamiento no permitido.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "Campo de ordenamiento no permitido.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "CP-04",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 20
+    }
+  },
+  {
+    "caso": "CP-05",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": -5
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.044951Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "CP-06",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/9999",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 15
+    },
+    "esperado": 404,
+    "obtenido": 404,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.093946900Z",
+      "status": 404,
+      "title": "Not Found",
+      "detail": "No existe un curso con ID: 9999",
+      "instance": "/api/v1/cursos/9999",
+      "error": "Not Found",
+      "message": "No existe un curso con ID: 9999",
+      "path": "/api/v1/cursos/9999"
+    }
+  },
+  {
+    "caso": "Idempotencia-1",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 20
+    }
+  },
+  {
+    "caso": "Idempotencia-2",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 20
+    }
+  },
+  {
+    "caso": "Idempotencia-3",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 20
+    }
+  },
+  {
+    "caso": "Idempotencia-4",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 20
+    }
+  },
+  {
+    "caso": "Ciclo-0",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=0",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.287950100Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El ciclo debe estar entre 1 y 10.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "El ciclo debe estar entre 1 y 10.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "Ciclo-11",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=11",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.305953600Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El ciclo debe estar entre 1 y 10.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "El ciclo debe estar entre 1 y 10.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "Ciclo-abc",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=abc",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.316949500Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El ciclo debe ser un entero entre 1 y 10.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "El ciclo debe ser un entero entre 1 y 10.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "Ciclo-1.5",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=1.5",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.335950100Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El ciclo debe ser un entero entre 1 y 10.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "El ciclo debe ser un entero entre 1 y 10.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "Ciclo-vacio",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?ciclo=",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.340948800Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El ciclo debe ser un entero entre 1 y 10.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "El ciclo debe ser un entero entre 1 y 10.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "SQL-injection",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos?sort=id%3BDROP%20TABLE%20cursos",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.347949500Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "Campo de ordenamiento no permitido.",
+      "instance": "/api/v1/cursos",
+      "error": "Bad Request",
+      "message": "Campo de ordenamiento no permitido.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "JSON-vacio",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {},
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.357948800Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-nulo",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": null
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.363950300Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-decimal",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 1.5
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.377949900Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "JSON inválido: revise los tipos y campos permitidos.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "JSON inválido: revise los tipos y campos permitidos.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-texto",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": "20"
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.384950600Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "JSON inválido: revise los tipos y campos permitidos.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "JSON inválido: revise los tipos y campos permitidos.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-booleano",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": true
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.414948400Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "JSON inválido: revise los tipos y campos permitidos.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "JSON inválido: revise los tipos y campos permitidos.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-desbordamiento",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 2147483648
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.422953600Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "JSON inválido: revise los tipos y campos permitidos.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "JSON inválido: revise los tipos y campos permitidos.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-mass-assignment",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 20,
+      "nombre": "Hacked"
+    },
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.433040400Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "JSON inválido: revise los tipos y campos permitidos.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "JSON inválido: revise los tipos y campos permitidos.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-malformado",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": "{",
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.464041500Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El cuerpo no es un JSON válido.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "El cuerpo no es un JSON válido.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "JSON-null",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": "null",
+    "esperado": 400,
+    "obtenido": 400,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.494040700Z",
+      "status": 400,
+      "title": "Bad Request",
+      "detail": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "instance": "/api/v1/cursos/1",
+      "error": "Bad Request",
+      "message": "El campo vacantes es obligatorio y debe ser un entero mayor o igual a cero.",
+      "path": "/api/v1/cursos/1"
+    }
+  },
+  {
+    "caso": "Cero-valido",
+    "method": "PATCH",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/1",
+    "authorization": "Bearer <oculto>",
+    "body": {
+      "vacantes": 0
+    },
+    "esperado": 200,
+    "obtenido": 200,
+    "cumple": true,
+    "response": {
+      "id": 1,
+      "codigo": "100000S154",
+      "nombre": "Desarrollo Web Integrado",
+      "ciclo": 6,
+      "vacantes": 0
+    }
+  },
+  {
+    "caso": "JWT-alterado",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.540042100Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "instance": "/api/v1/cursos",
+      "error": "Unauthorized",
+      "message": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "JWT-malformado",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.544050Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "instance": "/api/v1/cursos",
+      "error": "Unauthorized",
+      "message": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "JWT-expirado",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos",
+    "authorization": "Bearer <oculto>",
+    "body": null,
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.573041900Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "instance": "/api/v1/cursos",
+      "error": "Unauthorized",
+      "message": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "path": "/api/v1/cursos"
+    }
+  },
+  {
+    "caso": "Bypass-login",
+    "method": "GET",
+    "url": "http://127.0.0.1:8089/api/v1/cursos/auth/login",
+    "authorization": "Ausente",
+    "body": null,
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.577036300Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "instance": "/api/v1/cursos/auth/login",
+      "error": "Unauthorized",
+      "message": "Cabecera Bearer ausente o token inválido, alterado o expirado.",
+      "path": "/api/v1/cursos/auth/login"
+    }
+  },
+  {
+    "caso": "Login-incorrecto",
+    "method": "POST",
+    "url": "http://127.0.0.1:8089/api/auth/login",
+    "authorization": "Ausente",
+    "body": {
+      "usuario": "admin",
+      "clave": "incorrecta"
+    },
+    "esperado": 401,
+    "obtenido": 401,
+    "cumple": true,
+    "response": {
+      "type": "about:blank",
+      "timestamp": "2026-11-24T21:02:17.581043500Z",
+      "status": 401,
+      "title": "Unauthorized",
+      "detail": "Credenciales incorrectas.",
+      "instance": "/api/auth/login",
+      "error": "Unauthorized",
+      "message": "Credenciales incorrectas.",
+      "path": "/api/auth/login"
+    }
+  }
+]

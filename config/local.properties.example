@@ -1,0 +1,6 @@
+db.url=jdbc:mysql://127.0.0.1:3306/utp_matricula_s16?connectionTimeZone=UTC&allowPublicKeyRetrieval=true&sslMode=PREFERRED
+db.user=root
+db.password=REEMPLAZAR
+auth.user=admin
+auth.password=REEMPLAZAR
+jwt.secret=REEMPLAZAR_POR_BASE64_DE_32_BYTES_ALEATORIOS

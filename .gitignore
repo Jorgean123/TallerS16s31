@@ -1,0 +1,7 @@
+target/
+.runtime/
+config/local.properties
+evidencias/*.json
+tools/
+build.log
+entrega/*.zip
